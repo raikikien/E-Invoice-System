@@ -6,12 +6,19 @@ Project: E-Invoice System
 1.Description
 
 E-Invoice is built for the purpose of monthly invoice management in a family. It helps us to have an overall report of monthly expenses so that user could make plan to save money. User could set an alert for a limited amount of money consumed every month. Each invoice will have following information: 
+
 •	Type of invoice: Electric, internet, telephone, water, ... 
+
 •	Amount of money. 
+
 •	VAT 
+
 •	Charged period (monthly). 
+
 •	Invoice No. 
+
 •	Customer code (optional).
+
 
 2.Functional Specification 
 
