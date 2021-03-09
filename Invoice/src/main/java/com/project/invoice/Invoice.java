@@ -1,4 +1,4 @@
-package com.javaeinvoice;
+package com.project.invoice;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
