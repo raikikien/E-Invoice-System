@@ -47,7 +47,7 @@ public class UserService {
         User user = userRepository.findByUserId(userId);
 
         Invoice invoice =
-                restTemplate.getForObject("http://localhost:9091/invoices/" + user.getId()
+                restTemplate.getForObject("http://INVOICE-SERVICE/invoices/" + user.getId()
                         , Invoice.class);
         vo.setUser(user);
         vo.setInvoice(invoice);
