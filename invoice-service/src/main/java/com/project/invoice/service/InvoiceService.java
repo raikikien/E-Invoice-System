@@ -35,8 +35,9 @@ public class InvoiceService {
         invoiceRepository.deleteById(id);
     }
 
-    public List<Invoice> findByType(String type) {
+   /* public List<Invoice> findByType(String type) {
+        log.info("Inside findByType method of InvoiceController");
         return invoiceRepository.findByType(type);
-    }
+    }*/
 }
 

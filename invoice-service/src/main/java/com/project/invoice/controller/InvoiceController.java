@@ -45,8 +45,6 @@ public class InvoiceController {
 
             if (type == null)
                 invoiceService.findAll().forEach(invoices::add);
-            else
-                invoiceService.findByType(type).forEach(invoices::add);
 
             if (invoices.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

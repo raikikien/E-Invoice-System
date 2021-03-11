@@ -9,4 +9,4 @@ eureka:
 
 spring:
   application:
-    name: INVOICE-SERVICE
+    name: USER-SERVICE

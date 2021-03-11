@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class UserService {
@@ -22,6 +24,22 @@ public class UserService {
         log.info("Inside saveUser of UserService");
         return userRepository.save(user);
     }
+
+    public List<User> findAll() {
+        log.info("Inside listAll method of InvoiceController");
+        return userRepository.findAll();
+    }
+    public void deleteByUserId(long userId) {
+        log.info("Inside delete method of InvoiceController");
+        userRepository.deleteById(userId);
+    }
+
+   /* public List<Invoice> findByUsername(String username) {
+        log.info("Inside findByUsername method of UserController");
+        return userRepository.findByUsername(username);
+    }*/
+
+
 
     public ResponseTemplateVO getUserWithInvoice(Long userId) {
         log.info("Inside getUserWithInvoice of UserService");
