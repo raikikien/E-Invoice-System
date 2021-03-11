@@ -7,8 +7,12 @@ import com.project.invoice.service.InvoiceService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -33,10 +37,38 @@ public class InvoiceController {
         return invoiceService.findInvoiceById(id);
     }
 
- /*   @GetMapping("/all")
-    public @ResponseBody Iterable < Invoice > getAllInvoices() {
-        return InvoiceRepository.saveAll();
-    }*/
-    
+    @CrossOrigin(origins = "http://localhost:8080")
+    @GetMapping("/")
+    public ResponseEntity<List<Invoice>> getAllInvoices(@RequestParam(required = false) String type) {
+        try {
+            List<Invoice> invoices = new ArrayList<Invoice>();
+
+            if (type == null)
+                invoiceService.findAll().forEach(invoices::add);
+            else
+                invoiceService.findByType(type).forEach(invoices::add);
+
+            if (invoices.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(invoices, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+        try {
+            invoiceService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 }
 
