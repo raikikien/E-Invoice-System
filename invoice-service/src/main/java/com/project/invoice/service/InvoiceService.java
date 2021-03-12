@@ -21,6 +21,13 @@ public class InvoiceService {
         return invoiceRepository.save(invoice);
     }
 
+    public List<Invoice> findAllByMonth(int month){
+        return invoiceRepository.findAllByMonthly(month);
+    }
+    public List<Invoice> findAllByYear(int year){
+        return invoiceRepository.findAllByYearly(year);
+    }
+
     public Invoice findInvoiceById(Long id) {
         log.info("Inside findInvoiceById method of InvoiceController");
         return invoiceRepository.findInvoiceById(id);
@@ -34,6 +41,14 @@ public class InvoiceService {
         log.info("Inside delete method of InvoiceController");
         invoiceRepository.deleteById(id);
     }
+
+    /*public List<Invoice> findAllInvoicesByMonthly(int year, int month){
+        return invoiceRepository.findAllByMonthly(year, month);
+    }*/
+
+   /* public List<Invoice> findChargePeriodByMonth(int year, int month) {
+        return invoiceRepository.findChargePeriodByMonth(year, month);
+    }*/
 
    /* public List<Invoice> findByType(String type) {
         log.info("Inside findByType method of InvoiceController");

@@ -31,10 +31,23 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseTemplateVO getUserWithInvoice(@PathVariable("id") Long userId){
-        log.info("Inside getUserWithInvoice of UserController");
-        return userService.getUserWithInvoice(userId);
+    public User findUserById(@PathVariable("id") Long userId) {
+        log.info("Inside findUserById method of UserController");
+        return userService.findUserById(userId);
     }
+
+    @GetMapping("/{id}/invoices")
+        public ResponseEntity<List<ResponseTemplateVO>> getUserWithInvoice(@PathVariable("id") Long userId) {
+        {
+            List<ResponseTemplateVO> vo = new ArrayList<ResponseTemplateVO>();
+            if (vo.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(vo, HttpStatus.OK);
+        }
+    }
+
+
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllInvoices(@RequestParam(required = false) String username) {

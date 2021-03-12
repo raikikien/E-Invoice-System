@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -37,6 +38,16 @@ public class InvoiceController {
         return invoiceService.findInvoiceById(id);
     }
 
+    @GetMapping("/searchMonth/{month}")
+    public List<Invoice> findAllInvoicesByMonthly(@PathVariable("month") int month){
+        return invoiceService.findAllByMonth(month);
+    }
+    @GetMapping("/searchYear/{year}")
+    public List<Invoice> findAllInvoicesByYearly(@PathVariable("year") int year){
+        return invoiceService.findAllByYear(year);
+    }
+
+
     @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/")
     public ResponseEntity<List<Invoice>> getAllInvoices(@RequestParam(required = false) String type) {
@@ -49,7 +60,6 @@ public class InvoiceController {
             if (invoices.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             return new ResponseEntity<>(invoices, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

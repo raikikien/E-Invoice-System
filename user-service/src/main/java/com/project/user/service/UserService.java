@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +18,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    //@Autowired
+    //private RestTemplate restTemplate;
 
     public User saveUser(User user) {
         log.info("Inside saveUser of UserService");
@@ -34,14 +35,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-   /* public List<Invoice> findByUsername(String username) {
-        log.info("Inside findByUsername method of UserController");
-        return userRepository.findByUsername(username);
-    }*/
-
-
-
-    public ResponseTemplateVO getUserWithInvoice(Long userId) {
+   /* public ResponseTemplateVO getUserWithInvoice(Long userId) {
         log.info("Inside getUserWithInvoice of UserService");
         ResponseTemplateVO vo = new ResponseTemplateVO();
         User user = userRepository.findByUserId(userId);
@@ -53,5 +47,10 @@ public class UserService {
         vo.setInvoice(invoice);
 
         return vo;
+    }*/
+
+    public User findUserById(Long userId) {
+        log.info("Inside findInvoiceById method of InvoiceController");
+        return userRepository.findByUserId(userId);
     }
 }

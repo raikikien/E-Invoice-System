@@ -22,6 +22,4 @@ public class User {
     private String email;
     @Column(name="password")
     private String password;
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 }

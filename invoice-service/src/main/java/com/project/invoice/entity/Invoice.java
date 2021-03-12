@@ -27,4 +27,6 @@ public class Invoice {
     private Long vat;
     @Column(name="chargeperiod")
     private Date chargeperiod;
+    @Column(name="userIdInvoice")
+    private Long userIdInvoice;
 }

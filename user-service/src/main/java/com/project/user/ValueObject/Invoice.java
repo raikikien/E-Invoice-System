@@ -14,12 +14,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class Invoice {
     private Long id;
-    //@Column(name="type")
     private String type;
-    //@Column(name="money")
     private Long money;
-  //  @Column(name="vat")
     private Long vat;
-   // @Column(name="chargeperiod")
     private Date chargeperiod;
+    private Long userIdInvoice;
 }
