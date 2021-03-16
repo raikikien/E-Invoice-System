@@ -18,31 +18,28 @@ import java.util.logging.Logger;
 
 
 @RestController
-@RequestMapping("/invoices")
 @Slf4j
 public class InvoiceController {
 
     @Autowired
     private InvoiceService invoiceService;
-    private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
     @PostMapping("/")
     public Invoice saveInvoice(@RequestBody Invoice invoice) {
-        logger.info("Inside saveInvoice method of InvoiceController");
+
         return invoiceService.saveInvoice(invoice);
     }
 
     @GetMapping("/{id}")
     public Invoice findInvoiceById(@PathVariable("id") Long id) {
-        logger.info("Inside findInvoiceById method of InvoiceController");
         return invoiceService.findInvoiceById(id);
     }
 
-    @GetMapping("/searchMonth/{month}")
-    public List<Invoice> findAllInvoicesByMonthly(@PathVariable("month") int month){
-        return invoiceService.findAllByMonth(month);
+    @GetMapping("/searchMonthly/{year}/{month}")
+    public List<Invoice> findAllInvoicesByMonthly(@PathVariable("year") int year,@PathVariable("month") int month){
+        return invoiceService.findAllByMonth(year,month);
     }
-    @GetMapping("/searchYear/{year}")
+    @GetMapping("/searchYearly/{year}")
     public List<Invoice> findAllInvoicesByYearly(@PathVariable("year") int year){
         return invoiceService.findAllByYear(year);
     }
@@ -50,12 +47,23 @@ public class InvoiceController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/")
-    public ResponseEntity<List<Invoice>> getAllInvoices(@RequestParam(required = false) String type) {
+    public ResponseEntity<List<Invoice>> getAllInvoices() {
         try {
-            List<Invoice> invoices = new ArrayList<Invoice>();
+            List<Invoice> invoices =  invoiceService.findAll();
 
-            if (type == null)
-                invoiceService.findAll().forEach(invoices::add);
+            if (invoices.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(invoices, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+   @GetMapping("users/{userId}/invoices")
+    public ResponseEntity<List<Invoice>> getInvoicesByUserId(@PathVariable("userId") Long userId){
+        try {
+            List<Invoice> invoices =  invoiceService.findInvoiceByUserId(userId);
 
             if (invoices.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -14,8 +14,11 @@ import java.util.List;
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
     Invoice findInvoiceById(Long id);
-    @Query("select e from invoice e where MONTH(e.chargeperiod)=:searchMonth")
-    List <Invoice> findAllByMonthly(@Param("searchMonth") int searchMonth);
+    @Query("SELECT e FROM invoice e WHERE YEAR(e.chargeperiod) =:searchYear AND MONTH(e.chargeperiod) = :searchMonth")
+    //@Query("select e from invoice e where MONTH(e.chargeperiod)=:searchMonth")
+    List <Invoice> findAllByMonthly(@Param("searchYear") int searchYear,@Param("searchMonth") int searchMonth);
     @Query("select e from invoice e where YEAR(e.chargeperiod) =:searchYear")
     List <Invoice> findAllByYearly(@Param("searchYear") int searchYear);
+
+   List<Invoice> findInvoiceByUserId(Long userId);
 }

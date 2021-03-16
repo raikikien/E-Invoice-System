@@ -22,4 +22,6 @@ public class User {
     private String email;
     @Column(name="password")
     private String password;
+    @Column(name="activate")
+    private boolean activate;
 }
