@@ -24,27 +24,15 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/users/{id}")
-    public User findUserById(@PathVariable("id") Long userId) {
-        return userService.findUserById(userId);
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User>findByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(userService.findByUserId(userId));
     }
 
     @GetMapping("/users/{userId}/invoices")
     public ResponseEntity<String> findInvoiceByUserId(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userService.findInvoiceByUserId(userId));
     }
-
-    /*public ResponseEntity<List<User>> getInvoicesByUserId(@PathVariable("id") Long userId) {
-        {
-            List<User> vo = new ArrayList<ResponseTemplateVO>();
-            if (vo.isEmpty()) {
-                @GetMapping("/{id}/invoices")
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(vo, HttpStatus.OK);
-        }
-    }*/
-
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {

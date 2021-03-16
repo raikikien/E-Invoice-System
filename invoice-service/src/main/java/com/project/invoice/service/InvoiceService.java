@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.invoice.repository.InvoiceRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,6 +41,10 @@ public class InvoiceService {
 
    public List<Invoice> findInvoiceByUserId(Long userId) {
         return invoiceRepository.findInvoiceByUserId(userId);
+    }
+
+    public List<Invoice> findAllByPeriodDate(Date searchDateBegin, Date searchDateEnd) {
+        return invoiceRepository.findAllByPeriodDate(searchDateBegin, searchDateEnd );
     }
 }
 
