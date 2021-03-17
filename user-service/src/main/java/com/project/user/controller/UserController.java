@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -19,9 +20,25 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/users")
+    @PostMapping("/users/new")
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
+    }
+
+    @PutMapping("/users/update/{userId}")
+    public ResponseEntity<User> updateTutorial(@PathVariable("userId") Long userId, @RequestBody User user) {
+        Optional<User> userData = Optional.ofNullable(userService.findByUserId(userId));
+
+        if (userData.isPresent()) {
+            User _user = userData.get();
+            _user.setUsername(user.getUsername());
+            _user.setEmail(user.getEmail());
+            _user.setPassword(user.getPassword());
+            _user.setActive(user.isActive());
+            return new ResponseEntity<>(userService.saveUser(_user), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/users/{userId}")
@@ -48,7 +65,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long userId) {
         try {
             userService.deleteByUserId(userId);
