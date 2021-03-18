@@ -41,7 +41,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/users/find/{userId}")
     public ResponseEntity<User>findByUserId(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userService.findByUserId(userId));
     }
@@ -51,7 +51,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findInvoiceByUserId(userId));
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users/getall")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             List<User> users = userService.findAll();
@@ -65,7 +65,8 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/users/{id}")
+
+    @DeleteMapping("/users/delete/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long userId) {
         try {
             userService.deleteByUserId(userId);

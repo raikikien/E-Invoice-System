@@ -27,10 +27,14 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @PostMapping("/invoices/new")
-    public Invoice saveInvoice(@RequestBody Invoice invoice) {
-
-        return invoiceService.saveInvoice(invoice);
+    public ResponseEntity<Invoice> saveInvoice(@RequestBody Invoice invoice) {
+        if (invoiceService.findDuplicateInvoice(invoice).isEmpty()) {
+            return new ResponseEntity<>(invoiceService.saveInvoice(invoice), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+        //return invoiceService.saveInvoice(invoice);
 
     @PutMapping("/invoices/update/{id}")
     public ResponseEntity<Invoice> updateTutorial(@PathVariable("id") Long id, @RequestBody Invoice invoice) {
@@ -38,7 +42,7 @@ public class InvoiceController {
 
         if (invoiceData.isPresent()) {
             Invoice _tutorial = invoiceData.get();
-            _tutorial.setType(invoice.getType());
+            _tutorial.setTypename(invoice.getTypename());
             _tutorial.setMoney(invoice.getMoney());
             _tutorial.setVat(invoice.getVat());
             _tutorial.setChargeperiod(invoice.getChargeperiod());
@@ -48,7 +52,7 @@ public class InvoiceController {
         }
     }
 
-    @GetMapping("/invoices/{id}")
+    @GetMapping("/invoices/find/{id}")
     public Invoice findInvoiceById(@PathVariable("id") Long id) {
         return invoiceService.findInvoiceById(id);
     }
@@ -61,7 +65,7 @@ public class InvoiceController {
     public List<Invoice> findAllInvoicesByYearly(@PathVariable("year") int year){
         return invoiceService.findAllByYear(year);
     }
-    @GetMapping("/invoices/searchDatePeriod")
+    @GetMapping("/invoices/searchDatePeriod") // example to test: ("/invoices/searchDatePeriod?start=2021/04/01&end=2021/04/30")
     public List<Invoice> findAllByPeriodDate(@RequestParam("start") Date searchDateBegin,
                                              @RequestParam("end") Date searchDateEnd){
         return invoiceService.findAllByPeriodDate(searchDateBegin, searchDateEnd);
@@ -69,7 +73,7 @@ public class InvoiceController {
 
 
     @CrossOrigin(origins = "http://localhost:8080")
-    @GetMapping("/invoices")
+    @GetMapping("/invoices/getall")
     public ResponseEntity<List<Invoice>> getAllInvoices() {
         try {
             List<Invoice> invoices =  invoiceService.findAll();
@@ -97,7 +101,7 @@ public class InvoiceController {
         }
     }
 
-    @DeleteMapping("/invoices/{id}")
+    @DeleteMapping("/invoices/delete/{id}")
     public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
         try {
             invoiceService.deleteById(id);

@@ -26,7 +26,7 @@ public class User {
     private String password;
     @Column(name="active")
     private boolean active;
-    @Column(name="roles")
-    private String roles;
+    @Column(name="role")
+    private String role;
 
 }

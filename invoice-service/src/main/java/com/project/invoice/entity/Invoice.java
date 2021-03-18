@@ -19,8 +19,8 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-    @Column(name="type")
-    private String type;
+    @Column(name="typename")
+    private String typename;
     @Column(name="money")
     private Long money;
     @Column(name="vat")

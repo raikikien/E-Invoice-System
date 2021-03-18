@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.invoice.repository.InvoiceRepository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +47,14 @@ public class InvoiceService {
 
     public List<Invoice> findAllByPeriodDate(Date searchDateBegin, Date searchDateEnd) {
         return invoiceRepository.findAllByPeriodDate(searchDateBegin, searchDateEnd );
+    }
+
+    public List<Invoice> findDuplicateInvoice(Invoice invoice)
+    {
+        LocalDate localDate = invoice.getChargeperiod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int month = localDate.getMonthValue();
+        int year = localDate.getYear();
+        return invoiceRepository.findDuplicateInvoice(month, year, invoice.getTypename(), invoice.getUserId());
     }
 }
 
