@@ -2,6 +2,7 @@ package com.project.user.service;
 
 
 import com.project.user.api.InvoiceApi;
+import com.project.user.entity.Invoice;
 import com.project.user.entity.User;
 import com.project.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class UserService {
         return userRepository.findByUserId(userId);
     }
 
-    public String findInvoiceByUserId(Long userId) {
-        return invoiceApi.getInvoicesByUserId(userId);
+    public List<Invoice> findInvoiceByUserId(Long userId) {
+        return invoiceApi.findInvoiceByUserId(userId);
     }
 }

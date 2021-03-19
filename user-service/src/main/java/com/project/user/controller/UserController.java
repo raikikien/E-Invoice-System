@@ -1,6 +1,7 @@
 package com.project.user.controller;
 
 
+import com.project.user.entity.Invoice;
 import com.project.user.entity.User;
 import com.project.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,12 +47,13 @@ public class UserController {
         return ResponseEntity.ok(userService.findByUserId(userId));
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/users/{userId}/invoices")
-    public ResponseEntity<String> findInvoiceByUserId(@PathVariable("userId") Long userId) {
+    public ResponseEntity<List<Invoice>> findInvoiceByUserId(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userService.findInvoiceByUserId(userId));
     }
 
-    @GetMapping("/users/getall")
+    @GetMapping("/users/all")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             List<User> users = userService.findAll();

@@ -37,6 +37,8 @@ public class InvoiceService {
     public List<Invoice> findAll() {
         return invoiceRepository.findAll();
     }
+
+
     public void deleteById(long id) {
         invoiceRepository.deleteById(id);
     }

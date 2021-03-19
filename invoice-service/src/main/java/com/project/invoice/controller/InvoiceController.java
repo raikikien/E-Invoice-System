@@ -34,19 +34,18 @@ public class InvoiceController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-        //return invoiceService.saveInvoice(invoice);
 
     @PutMapping("/invoices/update/{id}")
-    public ResponseEntity<Invoice> updateTutorial(@PathVariable("id") Long id, @RequestBody Invoice invoice) {
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable("id") Long id, @RequestBody Invoice invoice) {
         Optional<Invoice> invoiceData = Optional.ofNullable(invoiceService.findInvoiceById(id));
 
         if (invoiceData.isPresent()) {
-            Invoice _tutorial = invoiceData.get();
-            _tutorial.setTypename(invoice.getTypename());
-            _tutorial.setMoney(invoice.getMoney());
-            _tutorial.setVat(invoice.getVat());
-            _tutorial.setChargeperiod(invoice.getChargeperiod());
-            return new ResponseEntity<>(invoiceService.saveInvoice(_tutorial), HttpStatus.OK);
+            Invoice _invoice = invoiceData.get();
+            _invoice.setTypename(invoice.getTypename());
+            _invoice.setMoney(invoice.getMoney());
+            _invoice.setVat(invoice.getVat());
+            _invoice.setChargeperiod(invoice.getChargeperiod());
+            return new ResponseEntity<>(invoiceService.saveInvoice(_invoice), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -72,8 +71,8 @@ public class InvoiceController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:8080")
-    @GetMapping("/invoices/getall")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/invoices/all")
     public ResponseEntity<List<Invoice>> getAllInvoices() {
         try {
             List<Invoice> invoices =  invoiceService.findAll();
@@ -102,7 +101,7 @@ public class InvoiceController {
     }
 
     @DeleteMapping("/invoices/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deleteInvoice(@PathVariable("id") long id) {
         try {
             invoiceService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
