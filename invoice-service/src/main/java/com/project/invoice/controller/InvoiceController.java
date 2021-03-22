@@ -104,7 +104,7 @@ public class InvoiceController {
     public ResponseEntity<HttpStatus> deleteInvoice(@PathVariable("id") long id) {
         try {
             invoiceService.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

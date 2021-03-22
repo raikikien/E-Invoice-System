@@ -22,12 +22,13 @@ public class UserController {
 
 
     @PostMapping("/users/new")
-    public User saveUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public ResponseEntity<User> saveUser(@RequestBody User user)
+    {
+        return ResponseEntity.ok(userService.saveUser(user));
     }
 
     @PutMapping("/users/update/{userId}")
-    public ResponseEntity<User> updateTutorial(@PathVariable("userId") Long userId, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId, @RequestBody User user) {
         Optional<User> userData = Optional.ofNullable(userService.findByUserId(userId));
 
         if (userData.isPresent()) {
@@ -72,7 +73,7 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long userId) {
         try {
             userService.deleteByUserId(userId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
