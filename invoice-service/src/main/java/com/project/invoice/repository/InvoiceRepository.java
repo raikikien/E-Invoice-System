@@ -22,10 +22,16 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     @Query("select e from invoice e where date(e.chargeperiod) between :searchDateBegin AND :searchDateEnd")
     List<Invoice> findAllByPeriodDate(@Param("searchDateBegin") Date searchDateBegin,
                                       @Param("searchDateEnd") Date searchDateEnd);
-    @Query ("SELECT e FROM invoice e where MONTH(e.chargeperiod) = :searchMonth AND YEAR(e.chargeperiod)  = :searchYear AND e.typename = :searchTypeName AND e.userId = :searchUserId")
+    @Query ("SELECT e FROM invoice e where MONTH(e.chargeperiod) = :searchMonth AND YEAR(e.chargeperiod)  = :searchYear AND e.typename = :searchTypeName")
     List<Invoice> findDuplicateInvoice(@Param("searchMonth") int month,
                                        @Param("searchYear") int year,
-                                       @Param("searchTypeName") String typename,
-                                       @Param("searchUserId") Long userId );
+                                       @Param("searchTypeName") String typename);
     List<Invoice> findInvoiceByUserId(Long userId);
+
+    @Query ("SELECT  e FROM invoice e where MONTH(CURRENT_DATE())=month(e.chargeperiod)")
+    List<Invoice> getAllByMonthly();
+
+    @Query ("SELECT  e FROM invoice e where YEAR(CURRENT_DATE())=year(e.chargeperiod)")
+    List<Invoice> getAllByYearly();
+
 }

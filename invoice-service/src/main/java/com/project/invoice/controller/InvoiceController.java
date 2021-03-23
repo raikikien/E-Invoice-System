@@ -86,6 +86,35 @@ public class InvoiceController {
         }
     }
 
+    @GetMapping("/invoices/monthly")
+    public ResponseEntity<List<Invoice>> getAllByMonthly() {
+        try {
+            List<Invoice> invoices =  invoiceService.getAllByMonthly();
+
+            if (invoices.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(invoices, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/invoices/yearly")
+    public ResponseEntity<List<Invoice>> getAllByYearly() {
+        try {
+            List<Invoice> invoices =  invoiceService.getAllByYearly();
+
+            if (invoices.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(invoices, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
    @GetMapping("/users/{userId}/invoices")
     public ResponseEntity<List<Invoice>> getInvoicesByUserId(@PathVariable("userId") Long userId){
         try {

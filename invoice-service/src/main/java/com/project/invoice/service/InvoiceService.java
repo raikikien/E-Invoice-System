@@ -51,12 +51,20 @@ public class InvoiceService {
         return invoiceRepository.findAllByPeriodDate(searchDateBegin, searchDateEnd );
     }
 
+    public List<Invoice> getAllByMonthly(){
+        return invoiceRepository.getAllByMonthly();
+    }
+
+    public List<Invoice> getAllByYearly(){
+        return invoiceRepository.getAllByYearly();
+    }
+
     public List<Invoice> findDuplicateInvoice(Invoice invoice)
     {
         LocalDate localDate = invoice.getChargeperiod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int month = localDate.getMonthValue();
         int year = localDate.getYear();
-        return invoiceRepository.findDuplicateInvoice(month, year, invoice.getTypename(), invoice.getUserId());
+        return invoiceRepository.findDuplicateInvoice(month, year, invoice.getTypename());
     }
 }
 
