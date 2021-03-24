@@ -45,6 +45,7 @@ public class InvoiceController {
             _invoice.setMoney(invoice.getMoney());
             _invoice.setVat(invoice.getVat());
             _invoice.setChargeperiod(invoice.getChargeperiod());
+            _invoice.setTotalmoney(invoice.getTotalmoney());
             return new ResponseEntity<>(invoiceService.saveInvoice(_invoice), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

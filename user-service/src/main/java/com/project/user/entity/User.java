@@ -28,6 +28,4 @@ public class User {
     private boolean active;
     @Column(name="role")
     private String role;
-    @Column(name= "totalmoney")
-    private Long totalmoney;
 }

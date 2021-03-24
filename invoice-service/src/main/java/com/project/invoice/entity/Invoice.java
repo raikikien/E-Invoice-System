@@ -32,4 +32,6 @@ public class Invoice {
     private Date chargeperiod;
     @Column(name="userId")
     private Long userId;
+    @Column(name="totalmoney")
+    private Long totalmoney;
 }
