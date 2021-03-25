@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+    <h2 class="text-center">Invoice Pie Chart</h2>
+    <canvas id="barChart" width="400" height="400"></canvas>
+</div>
+<a href="/invoice_table.html"><button  type="button" class="btn btn-outline-warning">Back
+</button></a>
+<script>
+        jQuery(document).ready(function () {
+            var chartDiv = $("#barChart");
+            var myChart = new Chart(chartDiv, {
+                type: 'pie',
+                data: {
+                    labels: ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"],
+                    datasets: [
+                        {
+                            data: [21, 39, 10, 14, 16],
+                            backgroundColor: [
+                                "#FF6384",
+                                "#4BC0C0",
+                                "#FFCE56",
+                                "#E7E9ED",
+                                "#36A2EB"
+                            ]
+                        }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Pie Chart'
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

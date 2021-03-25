@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+       
+    <style>
+        body {
+            color: #fff;
+            background: #c4e412;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-control {
+            height: 41px;
+            background: #f2f2f2;
+            box-shadow: none !important;
+            border: none;
+        }
+
+        .form-control:focus {
+            background: #e2e2e2;
+        }
+
+        .form-control,
+        .btn {
+            border-radius: 3px;
+        }
+
+        .signup-form {
+            width: 400px;
+            margin: 30px auto;
+        }
+
+        .signup-form form {
+            color: #999;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            background: #fff;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        .signup-form h2 {
+            color: #333;
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .signup-form hr {
+            margin: 0 -30px 20px;
+        }
+
+        .signup-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .signup-form input[type="checkbox"] {
+            margin-top: 3px;
+        }
+
+        .signup-form .row div:first-child {
+            padding-right: 10px;
+        }
+
+        .signup-form .row div:last-child {
+            padding-left: 10px;
+        }
+
+        .signup-form .btn {
+            font-size: 16px;
+            font-weight: bold;
+            background: #c4e412;
+            border: none;
+            min-width: 140px;
+        }
+
+        .signup-form .btn:hover,
+        .signup-form .btn:focus {
+            background: #c4e412 !important;
+            outline: none;
+        }
+
+        .signup-form a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .signup-form a:hover {
+            text-decoration: none;
+        }
+
+        .signup-form form a {
+            color: #c4e412;
+            text-decoration: none;
+        }
+
+        .signup-form form a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-form .hint-text {
+            padding-bottom: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-form">
+        <form>
+            <h2>Edit Invoice</h2>
+            <p>Edit whatever you like in this invoice!</p>
+            <hr>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col"><input id="typename" type="text" class="form-control" name="typename"
+                            placeholder="Type Of Invoice" required="required"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input id ="money" type="money" class="form-control" name="money" placeholder="Money" required>
+            </div>
+            <div class="form-group">
+                <input id="vat" type="vat" class="form-control" name="vat" placeholder="VAT" required>
+            </div>
+            <div class="form-group">
+                <input id="chargeperiod" type="chargeperiod" class="form-control" name="chargeperiod" placeholder="Charge Period"
+                    required>
+            </div>
+            <div class="form-group">
+                <input id="totalmoney" type="totalmoney" class="form-control" name="totalmoney" placeholder="Total Money" required>
+            </div>
+            <div class="form-group">
+                <button id="submit" class="btn btn-primary" type="button">Save</button>
+            </div>
+        </form>
+        <div class="hint-text">Don't wanna create an invoice anymore? <a href="/invoice_table.html">Go back here!</a>
+        </div>
+    </div>
+
+
+<script>
+     $(document).ready(function () {
+         console.log("hihi")
+            $.ajax({
+                url: "http://localhost:9191/invoices/find/" + localStorage.getItem("id"),
+                method: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    $("#typename").val(data.typename)
+                    $("#money").val(data.money)
+                    $("#vat").val(data.vat)
+                    $("#chargeperiod").val(data.chargeperiod)
+                    $("#totalmoney").val(data.totalmoney)
+                }
+            })
+        })
+</script>
+
+    <script>
+       
+
+        function createCourse(dataForm, callback) {
+            var options = {
+                method: 'PUT',
+                body: JSON.stringify(dataForm),
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            };
+            console.log(options.body);
+            k = 'http://localhost:9191/invoices/update/' + localStorage.getItem("id")
+            fetch(k, options)
+                .then(res => {
+                    console.log(res);
+                    window.location.href = "/invoice_table.html";
+                }
+                )
+                .then(err => {
+                    console.log(err);
+                });
+        }
+        $("#submit").on('click', function () {
+
+            var TN = document.querySelector('input[name="typename"]').value;
+            var MN = document.querySelector('input[name="money"]').value;
+            var VAT = document.querySelector('input[name="vat"]').value;
+            var CP = document.querySelector('input[name="chargeperiod"]').value;
+            var TM = document.querySelector('input[name="totalmoney"]').value;
+            var formData = {
+                typename: TN,
+                money: MN,
+                vat: VAT,
+                chargeperiod: CP,
+                totalmoney: TM
+            };
+            createCourse(formData)
+        });
+
+    </script>
+</body>
+
+</html>

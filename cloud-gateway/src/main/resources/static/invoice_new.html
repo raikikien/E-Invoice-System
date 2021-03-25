@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
+    <title>Bootstrap Simple Create Invoice Form with Purple Background</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <style>
+    body {
+        color: #fff;
+        background: #671ea3;
+        font-family: 'Roboto', sans-serif;
+    }
+    .form-control {
+        height: 41px;
+        background: #f2f2f2;
+        box-shadow: none !important;
+        border: none;
+    }
+    .form-control:focus {
+        background: #e2e2e2;
+    }
+    .form-control, .btn {
+        border-radius: 3px;
+    }
+    .signup-form {
+        width: 400px;
+        margin: 30px auto;
+    }
+    .signup-form form {
+        color: #999;
+        border-radius: 3px;
+        margin-bottom: 15px;
+        background: #fff;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .signup-form h2  {
+        color: #333;
+        font-weight: bold;
+        margin-top: 0;
+    }
+    .signup-form hr  {
+        margin: 0 -30px 20px;
+    }
+    .signup-form .form-group {
+        margin-bottom: 20px;
+    }
+    .signup-form input[type="checkbox"] {
+        margin-top: 3px;
+    }
+    .signup-form .row div:first-child {
+        padding-right: 10px;
+    }
+    .signup-form .row div:last-child {
+        padding-left: 10px;
+    }
+    .signup-form .btn {
+        font-size: 16px;
+        font-weight: bold;
+        background: #671ea3;
+        border: none;
+        min-width: 140px;
+    }
+    .signup-form .btn:hover, .signup-form .btn:focus {
+        background: #671ea3 !important;
+        outline: none;
+    }
+    .signup-form a {
+        color: #fff;
+        text-decoration: underline;
+    }
+    .signup-form a:hover {
+        text-decoration: none;
+    }
+    .signup-form form a {
+        color: #671ea3;
+        text-decoration: none;
+    }
+    .signup-form form a:hover {
+        text-decoration: underline;
+    }
+    .signup-form .hint-text  {
+        padding-bottom: 15px;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+<div class="signup-form">
+    <form>
+        <h2>Create Invoice</h2>
+        <p>Please fill in this form to create an invoice!</p>
+        <hr>
+        <div class="form-group">
+            <div class="row">
+                <div class="col"><input type="text" class="form-control" name="typename" placeholder="Type Of Invoice" required="required"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="money" class="form-control" name="money" placeholder="Money" required>
+        </div>
+        <div class="form-group">
+            <input type="vat" class="form-control" name="vat" placeholder="VAT" required>
+        </div>
+        <div class="form-group">
+            <input type="chargeperiod" class="form-control" name="chargeperiod" placeholder="Charge Period" required>
+        </div>
+        <div class="form-group">
+            <input type="totalmoney" class="form-control" name="totalmoney" placeholder="Total Money" required>
+        </div>
+        <div class="form-group">
+            <button id="submit" class="btn btn-primary" type="submit">Create</button>
+        </div>
+    </form>
+    <div class="hint-text">Don't wanna create an invoice anymore? <a href="/invoice_table.html">Go back here!</a></div>
+</div>
+
+<script>
+    function createCourse(dataForm, callback) {
+                var options = {
+                    method: 'POST',
+                    body: JSON.stringify(dataForm),
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                };
+                console.log(options.body);
+                fetch('http://localhost:9191/invoices/new', options)
+                    .then(
+                        // response => response.json()
+                    )
+                    .then(callback);
+                    //window.location.href = "/invoice_table.html"
+
+            }
+        $("#submit").on('click', function () {
+            
+            var TN = document.querySelector('input[name="typename"]').value;
+            var MN = document.querySelector('input[name="money"]').value;
+            var VAT = document.querySelector('input[name="vat"]').value;
+            var CP = document.querySelector('input[name="chargeperiod"]').value;
+            var TM = document.querySelector('input[name="totalmoney"]').value;
+            var formData = {
+                typename: TN,
+                money: MN,
+                vat: VAT,
+                chargeperiod: CP,
+                totalmoney: TM
+            };
+            createCourse(formData)
+            });
+</script>
+</body>
+</html>
