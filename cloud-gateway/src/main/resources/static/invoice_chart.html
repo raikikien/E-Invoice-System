@@ -11,19 +11,19 @@
 </head>
 
 <body>
-<div class="container">
-    <h2 class="text-center">Invoice Pie Chart</h2>
-    <canvas id="barChart" width="400" height="400"></canvas>
-</div>
-<a href="/invoice_table.html"><button  type="button" class="btn btn-outline-warning">Back
-</button></a>
-<script>
+    <div class="container">
+        <h2 class="text-center">Invoice Pie Chart</h2>
+        <canvas id="barChart" width="400" height="400"></canvas>
+    </div>
+    <a href="/invoice_table.html"><button type="button" class="btn btn-outline-warning">Back
+        </button></a>
+    <script>
         jQuery(document).ready(function () {
             var chartDiv = $("#barChart");
             var myChart = new Chart(chartDiv, {
                 type: 'pie',
                 data: {
-                    labels: ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"],
+                    labels: ["Water", "Electricity", "Rent", "Phone", "EarningLeft"],
                     datasets: [
                         {
                             data: [21, 39, 10, 14, 16],
