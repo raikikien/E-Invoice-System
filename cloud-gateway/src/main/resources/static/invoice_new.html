@@ -116,7 +116,7 @@
             <input type="totalmoney" class="form-control" name="totalmoney" placeholder="Total Money" required>
         </div>
         <div class="form-group">
-            <button id="submit" class="btn btn-primary" type="submit">Create</button>
+            <button id="submit" class="btn btn-primary" type="button">Create</button>
         </div>
     </form>
     <div class="hint-text">Don't wanna create an invoice anymore? <a href="/invoice_table.html">Go back here!</a></div>
@@ -135,11 +135,14 @@
                 };
                 console.log(options.body);
                 fetch('http://localhost:9191/invoices/new', options)
-                    .then(
-                        // response => response.json()
-                    )
-                    .then(callback);
-                    //window.location.href = "/invoice_table.html"
+                     .then(res => {
+                    console.log(res);
+                    window.location.href = "/invoice_table.html";
+                }
+                )
+                .then(err => {
+                    console.log(err);
+                });
 
             }
         $("#submit").on('click', function () {
@@ -149,12 +152,14 @@
             var VAT = document.querySelector('input[name="vat"]').value;
             var CP = document.querySelector('input[name="chargeperiod"]').value;
             var TM = document.querySelector('input[name="totalmoney"]').value;
+            var userId = "1";
             var formData = {
                 typename: TN,
                 money: MN,
                 vat: VAT,
                 chargeperiod: CP,
-                totalmoney: TM
+                totalmoney: TM,
+                userId,
             };
             createCourse(formData)
             });
