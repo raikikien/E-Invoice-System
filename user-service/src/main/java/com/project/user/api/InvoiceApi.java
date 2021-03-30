@@ -43,4 +43,9 @@ public interface InvoiceApi {
     @DeleteMapping("/invoices/delete/{id}")
     public ResponseEntity<HttpStatus> deleteInvoice(@PathVariable("id") long id);
 
+
+
+
+
+
 }

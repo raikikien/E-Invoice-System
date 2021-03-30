@@ -121,13 +121,13 @@
                 <td id="role" style="text-align:center;"></td>
                 <td id="active" style="text-align:center;"></td>
                 <td>
-                    <div style="text-align:center;"> <button onclick="SendEmail(this)" type="button" class="update btn btn-outline-secondary">
+                    <div style="text-align:center;"> <button onclick="SendEmail(this)" type="button" class="get_email btn btn-outline-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
           <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"></path>
         </svg>
                       </button>
                         &nbsp;&nbsp;&nbsp;
-                        <button onclick="DeleteInvoice(this)" type="button" class="update btn btn-outline-danger">
+                        <button onclick="DeleteUser(this)" type="button" class="update btn btn-outline-danger">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-x-square" viewBox="0 0 16 16">
                                 <path
@@ -182,6 +182,7 @@
                 $(rowObject).find("#role").html(role);
                 $(rowObject).find("#active").html(active);
                 $(rowObject).find(".update").val(userId);
+                $(rowObject).find(".get_email").val(email);
             }
             $.ajax({
                 url: "http://localhost:9191/users/all",
@@ -217,14 +218,21 @@
 
         
 
-        function SendEmail(e) {
-            console.log(e.value)
-            localStorage.setItem("userId", e.value)
-            // window.location.href = "/invoice_edit.html/"
+        function SendEmail(k) {
+            console.log(k.value)
+            localStorage.setItem("email", k.value)
+            $.ajax({
+               url: "http://localhost:9191/mail/send/" + localStorage.getItem("email"),
+               method: "post",
+                dataType: "json",
+                    success: function (data) {
+                    console.log("yatta")
+                    }
+            })
         }
 
 
-        function DeleteInvoice(e) {
+        function DeleteUser(e) {
             console.log(e.value)
             localStorage.setItem("userId", e.value)
             var result = confirm("Are you sure that you want to DELETE this user?");
@@ -233,12 +241,10 @@
                     url: "http://localhost:9191/users/delete/" + localStorage.getItem("userId"),
                     method: "delete",
                     dataType: "json",
-                    success: function (data) {
-                    }
-
                 })
+                alert("Delete Success!");
+                window.location.reload();
             }
-            window.location.reload();
         }
     </script>
 

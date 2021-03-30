@@ -1,33 +1,26 @@
 package com.project.email.controller;
 
-import com.project.email.entity.Mail;
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.ws.rs.Path;
+
+import com.project.email.Application;
 import com.project.email.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mail/sending")
 public class EmailController {
+
     @Autowired
-    private MailService mailService;
+    MailService mailService;
 
-    //some other code
-
-    @PostMapping()
-    public ResponseEntity<Mail> SendingEmail(Mail email){
-        try {
-            mailService.sendEmail(email);
-            return new ResponseEntity<>(email,  HttpStatus.OK);
-        } catch( MailException e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-
+    @PostMapping(value = "/mail/send/{email}")
+    public String send(@PathVariable("email") String email) throws AddressException, MessagingException, IOException {
+        mailService.sendEmail(email);
+        //mailService.sendEmailWithAttachment(email);
+        return "Email sent successfully";
     }
 }
-

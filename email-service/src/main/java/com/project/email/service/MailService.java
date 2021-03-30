@@ -1,35 +1,60 @@
 package com.project.email.service;
 
-import com.project.email.entity.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.IOException;
 
 @Service
 public class MailService {
-    private JavaMailSender javaMailSender;
+
     @Autowired
-    public MailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
+    private JavaMailSender javaMailSender;
+    public void sendEmail(String email) {
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+
+        msg.setSubject("Limited Expense");
+        msg.setText("You have spend too much \n Please pay attention to your money");
+
+        javaMailSender.send(msg);
 
     }
 
-    public void sendEmail(Mail usermodel) throws MailException {
+    public void sendEmailWithAttachment(String email) throws MessagingException, IOException {
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(usermodel.getName()).append(System.lineSeparator());
-        sb.append("\n Message: ").append(usermodel.getMessage());
+        MimeMessage msg = javaMailSender.createMimeMessage();
 
-        SimpleMailMessage mail = new SimpleMailMessage();
+        // true = multipart message
+        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        mail.setTo(usermodel.getEmail());
-        mail.setFrom("emailremoved@gmail.com");
-        mail.setSubject(usermodel.getMessage());
-        mail.setText(sb.toString());
+        helper.setTo(email);
 
-        javaMailSender.send(mail);
+        msg.setSubject("Limited Expense");
+
+        // default = text/plain
+        //helper.setText("Check attachment for image!");
+
+        // true = text/html
+        msg.setText("You have spend too much \n Please pay attention to your money");
+        helper.setText("<h1>Check attachment for image!</h1>", true);
+
+        // hard coded a file path
+        FileSystemResource file = new FileSystemResource(new File("C:/Kien\\Invoice\\123.jpg"));
+
+        helper.addAttachment("123.jpg", file);
+
+        javaMailSender.send(msg);
+
     }
 
 }

@@ -147,7 +147,6 @@
         </div>
     </div>
 
-
 <script>
      $(document).ready(function () {
          console.log("hihi")
@@ -183,13 +182,15 @@
             console.log(options.body);
             k = 'http://localhost:9191/invoices/update/' + localStorage.getItem("id")
             fetch(k, options)
-                .then(res => {
-                    console.log(res);
+            .then(response => response.json())
+                .then(dataform => {
+                    console.log('Success:', dataform);
                     window.location.href = "/invoice_table.html";
-                }
-                )
-                .then(err => {
-                    console.log(err);
+                    alert("Edit success!");
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert(error);
                 });
         }
         $("#submit").on('click', function () {

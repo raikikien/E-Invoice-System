@@ -29,9 +29,9 @@ public class InvoiceController {
     @PostMapping("/invoices/new")
     public ResponseEntity<Invoice> saveInvoice(@RequestBody Invoice invoice) {
         if (invoiceService.findDuplicateInvoice(invoice).isEmpty()) {
-            return new ResponseEntity<>(invoiceService.saveInvoice(invoice), HttpStatus.OK);
+            return new ResponseEntity<Invoice>(invoiceService.saveInvoice(invoice), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Invoice>(HttpStatus.NOT_FOUND);
         }
     }
 

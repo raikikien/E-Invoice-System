@@ -43,4 +43,10 @@ public class UserService {
     public List<Invoice> findInvoiceByUserId(Long userId) {
         return invoiceApi.findInvoiceByUserId(userId);
     }
+
+    public User findUserByEmail(String email)
+    {
+        return userRepository.findUserByEmail(email);
+    }
+
 }
