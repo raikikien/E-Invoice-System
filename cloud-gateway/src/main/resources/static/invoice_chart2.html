@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+</head>
+
+<body>
+    <div id="dashboard">
+        <div id="control1"></div>
+        <div id="control2"></div>
+        <div id="chart1"></div>
+        <div id="chart2"></div>
+    </div>
+    <a href="/invoice_table.html"><button type="button" class="btn btn-outline-warning">Back
+        </button></a>
+    <script type='text/javascript' >
+    function drawVisualization() {
+    // Prepare the data
+    var data = google.visualization.arrayToDataTable([
+        ['Name', 'Gender', 'Age', 'Donuts eaten'],
+        ['Michael' , 'Male', 12, 5],
+        ['Elisa', 'Female', 20, 7],
+        ['Robert', 'Male', 7, 3],
+        ['John', 'Male', 54, 2],
+        ['Jessica', 'Female', 22, 6],
+        ['Aaron', 'Male', 3, 1],
+        ['Margareth', 'Female', 42, 8],
+        ['Miranda', 'Female', 33, 6]
+    ]);
+    
+    // Define a slider control for the Age column.
+    var slider = new google.visualization.ControlWrapper({
+        'controlType': 'NumberRangeFilter',
+        'containerId': 'control1',
+        'options': {
+            'filterColumnLabel': 'Age',
+            'ui': {'labelStacking': 'vertical'}
+        }
+    });
+    
+    // Define a category picker control for the Gender column
+    var categoryPicker = new google.visualization.ControlWrapper({
+        'controlType': 'CategoryFilter',
+        'containerId': 'control2',
+        'options': {
+            'filterColumnLabel': 'Gender',
+            'ui': {
+                'labelStacking': 'vertical',
+                'allowTyping': false,
+                'allowMultiple': false
+            }
+        }
+    });
+    
+    // Define a Pie chart
+    var pie = new google.visualization.ChartWrapper({
+        'chartType': 'PieChart',
+        'containerId': 'chart1',
+        'options': {
+            'width': 300,
+            'height': 300,
+            'legend': 'none',
+            'title': 'Donuts eaten per person',
+            'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+            'pieSliceText': 'label'
+        },
+        // Instruct the piechart to use colums 0 (Name) and 3 (Donuts Eaten)
+        // from the 'data' DataTable.
+        'view': {'columns': [0, 3]}
+    });
+    
+    // Define a table
+    var table = new google.visualization.ChartWrapper({
+        'chartType': 'Table',
+        'containerId': 'chart2',
+        'options': {
+            'width': '300px'
+        }
+    });
+    
+    google.visualization.events.addListener(pie, 'ready', function () {
+        var dt = pie.getDataTable().toDataTable();
+        var totals = google.visualization.data.group(dt, [{
+            type: 'number',
+            column: 0,
+            // make all values the same
+            modifier: function () {return 0;}
+        }], [{
+            type: 'number',
+            column: 2,
+            aggregation: google.visualization.data.sum
+        }, {
+            type: 'number',
+            column: 3,
+            aggregation: google.visualization.data.sum
+        }]);
+        dt.addRow(['Total', null, totals.getValue(0, 1), totals.getValue(0, 2)]);
+        table.setDataTable(dt);
+        table.draw();
+    });
+    
+    // Create a dashboard
+    new google.visualization.Dashboard(document.getElementById('dashboard')).
+    // Establish bindings, declaring the both the slider and the category
+    // picker will drive both charts.
+    bind([slider, categoryPicker], [pie]).
+    // Draw the entire dashboard.
+    draw(data);
+}
+google.load('visualization', '1', {packages:['controls'], callback: drawVisualization});
+    </script>
+</body>
+
+</html>

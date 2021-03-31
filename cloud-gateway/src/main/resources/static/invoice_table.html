@@ -262,6 +262,12 @@
             loaddata(URL2)
         }
 
+        function getall() {
+            console.log("hehe");
+            let URL2 = "http://localhost:9191/invoices/all"
+            loaddata(URL2)
+        }
+
 
         var datatable 
         function loaddata(URL) {
@@ -317,179 +323,6 @@
 
         }
 
-        // )
-        // function getmonthly() {
-        //     console.log("hdsfhdshf")
-        //     function setDataMonthly(rowObject, v) {
-        //         var id = v.id;
-        //         var typename = v.typename;
-        //         var money = v.money;
-        //         var vat = v.vat;
-        //         var chargeperiod = v.chargeperiod;
-        //         var totalmoney = v.totalmoney;
-        //         $(rowObject).find("#id").html(id);
-        //         $(rowObject).find("#typename").html(typename);
-        //         $(rowObject).find("#money").html(money);
-        //         $(rowObject).find("#vat").html(vat);
-        //         $(rowObject).find("#chargeperiod").html(chargeperiod);
-        //         $(rowObject).find("#totalmoney").html(totalmoney);
-        //     }
-        //     $.ajax({
-        //         url: "http://localhost:9191/invoices/monthly",
-        //         method: "get",
-        //         dataType: "json",
-        //         success: function (data) {
-        //             console.log(data)
-        //             $('#example tbody').find("tr:gt(0)").remove(); //remove all old rows except first one
-        //             $.each(data, function (i, v) {
-        //                 if (i == 0) {
-        //                     //setting the data in first row itself
-        //                     setDataMonthly($("#example tbody").find("tr").first(), v);
-        //                     console.log(v)
-        //                 } else {
-        //                     //clonning the first row and setting data over it and then appending in tbody
-        //                     var clonnedRow = $($("#example tbody").find("tr").first()).clone();
-        //                     console.log(v)
-        //                     setDataMonthly(clonnedRow, v);
-        //                     $("#example tbody").append(clonnedRow);
-        //                 }
-        //             })
-        //             datatable.destroy();
-        //             $('#example').DataTable({
-        //                 "bServerSide": false,
-        //             })
-        //         }
-        //     })
-        // }
-
-
-        // function getyearly() {
-        //     console.log("hehe")
-        //     function setDataYearly(rowObject, v) {
-        //         var id = v.id;
-        //         var typename = v.typename;
-        //         var money = v.money;
-        //         var vat = v.vat;
-        //         var chargeperiod = v.chargeperiod;
-        //         var totalmoney = v.totalmoney;
-        //         $(rowObject).find("#id").html(id);
-        //         $(rowObject).find("#typename").html(typename);
-        //         $(rowObject).find("#money").html(money);
-        //         $(rowObject).find("#vat").html(vat);
-        //         $(rowObject).find("#chargeperiod").html(chargeperiod);
-        //         $(rowObject).find("#totalmoney").html(totalmoney);
-        //     }
-        //     $.ajax({
-        //         url: "http://localhost:9191/invoices/yearly",
-        //         method: "get",
-        //         dataType: "json",
-        //         success: function (data) {
-        //             console.log(data)
-        //             $('#example tbody').find("tr:gt(0)").remove(); //remove all old rows except first one
-        //             $.each(data, function (i, v) {
-        //                 if (i == 0) {
-        //                     //setting the data in first row itself
-        //                     setDataYearly($("#example tbody").find("tr").first(), v);
-        //                     console.log(v)
-        //                 } else {
-        //                     //clonning the first row and setting data over it and then appending in tbody
-        //                     var clonnedRow = $($("#example tbody").find("tr").first()).clone();
-        //                     console.log(v)
-        //                     setDataYearly(clonnedRow, v);
-        //                     $("#example tbody").append(clonnedRow);
-        //                 }
-        //             })
-
-        //         }
-        //     })
-
-        // }
-
-        // function getPeriod() {
-        //     console.log("hdsfhdshf")
-        //     function setDataPeriod(rowObject, v) {
-        //         var id = v.id;
-        //         var typename = v.typename;
-        //         var money = v.money;
-        //         var vat = v.vat;
-        //         var chargeperiod = v.chargeperiod;
-        //         var totalmoney = v.totalmoney;
-        //         $(rowObject).find("#id").html(id);
-        //         $(rowObject).find("#typename").html(typename);
-        //         $(rowObject).find("#money").html(money);
-        //         $(rowObject).find("#vat").html(vat);
-        //         $(rowObject).find("#chargeperiod").html(chargeperiod);
-        //         $(rowObject).find("#totalmoney").html(totalmoney);
-        //     }
-
-        //     var startPeriod = $("#startPeriod").val();
-        //     var endPeriod = $("#endPeriod").val();
-        //     $.ajax({
-        //         url: `http://localhost:9191/invoices/searchDatePeriod?start=${startPeriod}&end=${endPeriod}`,
-        //         method: "get",
-        //         dataType: "json",
-        //         success: function (data) {
-        //             console.log(data)
-        //             $('#example tbody').find("tr:gt(0)").remove(); //remove all old rows except first one
-        //             $.each(data, function (i, v) {
-        //                 if (i == 0) {
-        //                     //setting the data in first row itself
-        //                     setDataPeriod($("#example tbody").find("tr").first(), v);
-        //                     console.log(v)
-        //                 } else {
-        //                     //clonning the first row and setting data over it and then appending in tbody
-        //                     var clonnedRow = $($("#example tbody").find("tr").first()).clone();
-        //                     console.log(v)
-        //                     setDataPeriod(clonnedRow, v);
-        //                     $("#example tbody").append(clonnedRow);
-        //                 }
-        //             })
-        //         }
-        //     })
-        // }
-
-
-
-        // function getall() {
-        //     console.log("lmao")
-        //     function setDataAll(rowObject, v) {
-        //         var id = v.id;
-        //         var typename = v.typename;
-        //         var money = v.money;
-        //         var vat = v.vat;
-        //         var chargeperiod = v.chargeperiod;
-        //         var totalmoney = v.totalmoney;
-        //         $(rowObject).find("#id").html(id);
-        //         $(rowObject).find("#typename").html(typename);
-        //         $(rowObject).find("#money").html(money);
-        //         $(rowObject).find("#vat").html(vat);
-        //         $(rowObject).find("#chargeperiod").html(chargeperiod);
-        //         $(rowObject).find("#totalmoney").html(totalmoney);
-        //     }
-        //     $.ajax({
-        //         url: "http://localhost:9191/invoices/all",
-        //         method: "get",
-        //         dataType: "json",
-        //         success: function (data) {
-        //             console.log(data)
-        //             $('#example tbody').find("tr:gt(0)").remove(); //remove all old rows except first one
-        //             $.each(data, function (i, v) {
-        //                 if (i == 0) {
-        //                     //setting the data in first row itself
-        //                     setDataAll($("#example tbody").find("tr").first(), v);
-        //                     console.log(v)
-        //                 } else {
-        //                     //clonning the first row and setting data over it and then appending in tbody
-        //                     var clonnedRow = $($("#example tbody").find("tr").first()).clone();
-        //                     console.log(v)
-        //                     setDataAll(clonnedRow, v);
-        //                     $("#example tbody").append(clonnedRow);
-        //                 }
-        //             })
-        //         }
-        //     })
-
-        // }
 
         function updateInvoice(e) {
             console.log(e.value)

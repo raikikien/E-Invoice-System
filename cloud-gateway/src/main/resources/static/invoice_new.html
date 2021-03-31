@@ -121,15 +121,12 @@
 
 <body>
     <div class="signup-form">
-        <form>
+        <form id="submit">
             <h2>Create Invoice</h2>
             <p>Please fill in this form to create an invoice!</p>
             <hr>
             <div class="form-group">
-                <div class="row">
-                    <div class="col"><input type="text" class="form-control" name="typename"
-                            placeholder="Type Of Invoice" required="required"></div>
-                </div>
+                <input type="typename" class="form-control" name="typename" placeholder="Type Of Invoice" required>
             </div>
             <div class="form-group">
                 <input type="money" class="form-control" name="money" placeholder="Money" required>
@@ -145,7 +142,7 @@
                 <input type="totalmoney" class="form-control" name="totalmoney" placeholder="Total Money" required>
             </div>
             <div class="form-group">
-                <button id="submit" class="btn btn-primary" type="button">Create</button>
+                <button  class="btn btn-primary" type="submit">Create</button>
             </div>
         </form>
         <div class="hint-text">Don't wanna create an invoice anymore? <a href="/invoice_table.html">Go back here!</a>
@@ -167,38 +164,22 @@
             console.log(options.body);
             fetch('http://localhost:9191/invoices/new', options)
                 .then(response => {
-                    if(response.status === 200){
+                    if (response.status === 200) {
                         console.log('Success:', response.json());
-                    window.location.href = "/invoice_table.html";
-                    alert("Create success!");
+                        window.location.href = "/invoice_table.html";
+                        alert("Create success!");
+                    }
+                    else if (response.status === 404) {
+                        console.error('Error:', response);
+                        alert("Duplicate Invoice!, Please Check again!");
                     }
                     else {
-                        console.error('Error:', response);
-                    alert("Duplicate Invoice!, Please Check again!");
+                        console.error('Error:',error);
+                        alert(error);
                     }
                 })
-                // .then(dataform => {
-                //     console.log('Success:', dataform);
-                //     window.location.href = "/invoice_table.html";
-                //     alert("Create success!");
-                // })
-                // .catch((error) => {
-                //     console.error('Error:', error);
-                //     alert("Duplicate Invoice!, Please Check again!");
-                // });
-
-
-            // if (success) {
-            //     window.location.href = "/invoice_table.html";
-            //     alert("Create success!");
-            // }
-            // else {
-            //     alert("duplicate invoice! Please check again!");
-            // }
-
-
         }
-        $("#submit").on('click', function () {
+        $("#submit").on('submit', function () {
 
             var TN = document.querySelector('input[name="typename"]').value;
             var MN = document.querySelector('input[name="money"]').value;
@@ -215,6 +196,7 @@
                 userId,
             };
             createCourse(formData)
+            return false;
         });
     </script>
 </body>

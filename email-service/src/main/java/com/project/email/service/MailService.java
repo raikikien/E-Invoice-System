@@ -1,6 +1,9 @@
 package com.project.email.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,9 +15,12 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 
 @Service
 public class MailService {
+    Logger LOG = LoggerFactory.getLogger(MailService.class);
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -30,30 +36,34 @@ public class MailService {
 
     }
 
-    public void sendEmailWithAttachment(String email) throws MessagingException, IOException {
+    public void sendEmailWithAttachment(String email) throws MessagingException, IOException, URISyntaxException {
 
         MimeMessage msg = javaMailSender.createMimeMessage();
 
         // true = multipart message
-        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        helper.setTo(email);
+            helper.setTo(email);
 
-        msg.setSubject("Limited Expense");
+            helper.setSubject("Limited Expense");
 
-        // default = text/plain
-        //helper.setText("Check attachment for image!");
+            // default = text/plain
+            //helper.setText("Check attachment for image!");
 
-        // true = text/html
-        msg.setText("You have spend too much \n Please pay attention to your money");
-        helper.setText("<h1>Check attachment for image!</h1>", true);
+            // true = text/html
+            helper.setText("You have spent too much \n Please pay attention to your money\n<h1>Check attachment for image!</h1>", true);
+//            helper.setText("<h1>Check attachment for image!</h1>", true);
 
-        // hard coded a file path
-        FileSystemResource file = new FileSystemResource(new File("C:/Kien\\Invoice\\123.jpg"));
+            // hard coded a file path
+            InputStream inputStream = getClass().getResourceAsStream("/123.jpg");
+            LOG.info(inputStream.toString());
+            helper.addAttachment("123.jpg", new ByteArrayResource(inputStream.readAllBytes()));
 
-        helper.addAttachment("123.jpg", file);
-
-        javaMailSender.send(msg);
+            javaMailSender.send(msg);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
     }
 

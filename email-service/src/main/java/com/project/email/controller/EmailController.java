@@ -1,6 +1,7 @@
 package com.project.email.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -18,9 +19,9 @@ public class EmailController {
     MailService mailService;
 
     @PostMapping(value = "/mail/send/{email}")
-    public String send(@PathVariable("email") String email) throws AddressException, MessagingException, IOException {
-        mailService.sendEmail(email);
-        //mailService.sendEmailWithAttachment(email);
+    public String send(@PathVariable("email") String email) throws AddressException, MessagingException, IOException, URISyntaxException {
+        //mailService.sendEmail(email);
+        mailService.sendEmailWithAttachment(email);
         return "Email sent successfully";
     }
 }

@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-       
+
     <style>
         body {
             color: #fff;
@@ -116,40 +116,38 @@
 
 <body>
     <div class="signup-form">
-        <form>
+        <form id="submit">
             <h2>Edit Invoice</h2>
             <p>Edit whatever you like in this invoice!</p>
             <hr>
             <div class="form-group">
-                <div class="row">
-                    <div class="col"><input id="typename" type="text" class="form-control" name="typename"
-                            placeholder="Type Of Invoice" required="required"></div>
-                </div>
+                <input id="typename" type="typename" class="form-control" name="typename" placeholder="Type Of Invoice" required>
             </div>
             <div class="form-group">
-                <input id ="money" type="money" class="form-control" name="money" placeholder="Money" required>
+                <input id="money" type="money" class="form-control" name="money" placeholder="Money" required>
             </div>
             <div class="form-group">
                 <input id="vat" type="vat" class="form-control" name="vat" placeholder="VAT" required>
             </div>
             <div class="form-group">
-                <input id="chargeperiod" type="chargeperiod" class="form-control" name="chargeperiod" placeholder="Charge Period"
-                    required>
+                <input id="chargeperiod" type="chargeperiod" class="form-control" name="chargeperiod"
+                    placeholder="Charge Period" required>
             </div>
             <div class="form-group">
-                <input id="totalmoney" type="totalmoney" class="form-control" name="totalmoney" placeholder="Total Money" required>
+                <input id="totalmoney" type="totalmoney" class="form-control" name="totalmoney"
+                    placeholder="Total Money" required>
             </div>
             <div class="form-group">
-                <button id="submit" class="btn btn-primary" type="button">Save</button>
+                <button  class="btn btn-primary" type="submit">Save</button>
             </div>
         </form>
         <div class="hint-text">Don't wanna create an invoice anymore? <a href="/invoice_table.html">Go back here!</a>
         </div>
     </div>
 
-<script>
-     $(document).ready(function () {
-         console.log("hihi")
+    <script>
+        $(document).ready(function () {
+            console.log("hihi")
             $.ajax({
                 url: "http://localhost:9191/invoices/find/" + localStorage.getItem("id"),
                 method: "get",
@@ -164,10 +162,10 @@
                 }
             })
         })
-</script>
+    </script>
 
     <script>
-       
+
 
         function createCourse(dataForm, callback) {
             var options = {
@@ -182,18 +180,23 @@
             console.log(options.body);
             k = 'http://localhost:9191/invoices/update/' + localStorage.getItem("id")
             fetch(k, options)
-            .then(response => response.json())
-                .then(dataform => {
-                    console.log('Success:', dataform);
-                    window.location.href = "/invoice_table.html";
-                    alert("Edit success!");
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert(error);
-                });
+            .then(response => {
+					if (response.status === 200) {
+						console.log('Success:', response.json());
+						// window.location.href = "/invoice_table.html";
+						alert("Edit success!");
+					}
+					// else if (response.status===500) {
+					// 	console.error('Error:', response);
+					// 	alert(response);
+					// }
+                    else {
+                        console.error('Error: ', response);
+                        alert(response);
+                    }
+				})
         }
-        $("#submit").on('click', function () {
+        $("#submit").on('submit', function () {
 
             var TN = document.querySelector('input[name="typename"]').value;
             var MN = document.querySelector('input[name="money"]').value;
@@ -208,6 +211,7 @@
                 totalmoney: TM
             };
             createCourse(formData)
+            return false;
         });
 
     </script>

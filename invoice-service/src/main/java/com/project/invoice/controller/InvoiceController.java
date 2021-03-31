@@ -5,6 +5,7 @@ import com.project.invoice.entity.Invoice;
 import com.project.invoice.repository.InvoiceRepository;
 import com.project.invoice.service.InvoiceService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -16,12 +17,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
-
 
 @RestController
 @Slf4j
 public class InvoiceController {
+    Logger LOG = LoggerFactory.getLogger(InvoiceController.class);
 
     @Autowired
     private InvoiceService invoiceService;
@@ -77,7 +77,7 @@ public class InvoiceController {
     public ResponseEntity<List<Invoice>> getAllInvoices() {
         try {
             List<Invoice> invoices =  invoiceService.findAll();
-
+            LOG.info(invoices.get(1).getChargeperiod().toString());
             if (invoices.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
