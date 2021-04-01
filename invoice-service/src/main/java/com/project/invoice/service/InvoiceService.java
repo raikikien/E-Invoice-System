@@ -61,7 +61,8 @@ public class InvoiceService {
 
     public List<Invoice> findDuplicateInvoice(Invoice invoice)
     {
-        LocalDate localDate = invoice.getChargeperiod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        LocalDate localDate = invoice.getChargeperiod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDate = invoice.getChargeperiod();
         int month = localDate.getMonthValue();
         int year = localDate.getYear();
         return invoiceRepository.findDuplicateInvoice(month, year, invoice.getTypename());

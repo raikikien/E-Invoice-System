@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -29,7 +31,7 @@ public class Invoice {
     private Long vat;
     @JsonFormat(pattern = "yyyy/MM/dd")
     @Column(name="chargeperiod")
-    private Date chargeperiod;
+    private LocalDate chargeperiod;
     @Column(name="userId")
     private Long userId;
     @Column(name="totalmoney")

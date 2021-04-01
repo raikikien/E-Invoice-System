@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +56,8 @@ public class InvoiceController {
 
     @GetMapping("/invoices/find/{id}")
     public Invoice findInvoiceById(@PathVariable("id") Long id) {
-        return invoiceService.findInvoiceById(id);
+        Invoice invoice = invoiceService.findInvoiceById(id);
+        return invoice;
     }
 
     @GetMapping("/invoices/searchMonthly/{year}/{month}")
@@ -77,7 +80,6 @@ public class InvoiceController {
     public ResponseEntity<List<Invoice>> getAllInvoices() {
         try {
             List<Invoice> invoices =  invoiceService.findAll();
-            LOG.info(invoices.get(1).getChargeperiod().toString());
             if (invoices.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
