@@ -166,8 +166,8 @@
                 .then(response => {
                     if (response.status === 200) {
                         console.log('Success:', response.json());
-                        window.location.href = "/invoice_table.html";
                         alert("Create success!");
+                        window.location.href = `http://${window.location.host}/invoice_table.html`;
                     }
                     else if (response.status === 404) {
                         console.error('Error:', response);

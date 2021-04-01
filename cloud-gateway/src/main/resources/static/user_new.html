@@ -155,8 +155,8 @@
 				.then(response => {
 					if (response.status === 200) {
 						console.log('Success:', response.json());
-						window.location.href = "/index.html";
 						alert("Create success!");
+                        window.location.href = `http://${window.location.host}/index.html`;
 					}
 					else {
 						console.error('Error:', response);

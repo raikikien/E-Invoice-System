@@ -28,7 +28,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
                                        @Param("searchTypeName") String typename);
     List<Invoice> findInvoiceByUserId(Long userId);
 
-    @Query ("SELECT  e FROM invoice e where MONTH(CURRENT_DATE())=month(e.chargeperiod)")
+    @Query ("SELECT  e FROM invoice e where MONTH(CURRENT_DATE())=month(e.chargeperiod) AND YEAR(CURRENT_DATE())=year(e.chargeperiod)")
     List<Invoice> getAllByMonthly();
 
     @Query ("SELECT  e FROM invoice e where YEAR(CURRENT_DATE())=year(e.chargeperiod)")

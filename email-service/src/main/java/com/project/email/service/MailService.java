@@ -52,7 +52,7 @@ public class MailService {
             //helper.setText("Check attachment for image!");
 
             // true = text/html
-            helper.setText("You have spent too much \n Please pay attention to your money\n<h1>Check attachment for image!</h1>", true);
+            helper.setText("You have spent too much\r\nPlease pay attention to your money\n<h1>Check attachment for image!</h1>", true);
 //            helper.setText("<h1>Check attachment for image!</h1>", true);
 
             // hard coded a file path
