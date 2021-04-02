@@ -48,12 +48,8 @@ public class MailService {
 
             helper.setSubject("Limited Expense");
 
-            // default = text/plain
-            //helper.setText("Check attachment for image!");
-
             // true = text/html
-            helper.setText("You have spent too much\r\nPlease pay attention to your money\n<h1>Check attachment for image!</h1>", true);
-//            helper.setText("<h1>Check attachment for image!</h1>", true);
+            helper.setText("You have spent too much!!!\n<h1>Please pay attention to your money!</h1>", true);
 
             // hard coded a file path
             InputStream inputStream = getClass().getResourceAsStream("/123.jpg");

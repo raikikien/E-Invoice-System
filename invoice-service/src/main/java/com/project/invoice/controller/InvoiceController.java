@@ -41,7 +41,7 @@ public class InvoiceController {
     public ResponseEntity<Invoice> updateInvoice(@PathVariable("id") Long id, @RequestBody Invoice invoice) {
         Optional<Invoice> invoiceData = Optional.ofNullable(invoiceService.findInvoiceById(id));
 
-        if (invoiceData.isPresent()) {
+        if (invoiceData.isPresent() && invoiceService.findDuplicateInvoice(invoice).isEmpty() ) {
             Invoice _invoice = invoiceData.get();
             _invoice.setTypename(invoice.getTypename());
             _invoice.setMoney(invoice.getMoney());

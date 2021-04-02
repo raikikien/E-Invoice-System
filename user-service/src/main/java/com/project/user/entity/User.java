@@ -28,4 +28,8 @@ public class User {
     private boolean active;
     @Column(name="role")
     private String role;
+    @Column (name="limitExpense")
+    private Long limitExpense;
+    @Column (name="alreadySpent")
+    private Long alreadySpent;
 }

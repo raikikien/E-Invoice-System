@@ -181,20 +181,20 @@
             k = 'http://localhost:9191/invoices/update/' + localStorage.getItem("id")
             fetch(k, options)
             .then(response => {
-					if (response.status === 200) {
-						console.log('Success:', response.json());
-						alert("Edit success!");
+                    if (response.status === 200) {
+                        console.log('Success:', response.json());
+                        alert("Edit success!");
                         window.location.href = `http://${window.location.host}/invoice_table.html`;
-					}
-					// else if (response.status===500) {
-					// 	console.error('Error:', response);
-					// 	alert(response);
-					// }
-                    else {
-                        console.error('Error: ', response);
-                        alert(response);
                     }
-				})
+                    else if (response.status === 404) {
+                        console.error('Error:', response);
+                        alert("Duplicate Invoice!, Please Check again!");
+                    }
+                    else {
+                        console.error('Error:',error);
+                        alert(error);
+                    }
+                })
         }
         $("#submit").on('submit', function () {
 
